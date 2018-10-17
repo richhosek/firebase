@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Firebase Demo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.4/firebase.js"></script>
+
+</head>
+
+<body>
+    <button id="button">click me</button>
+    <div id="debug"></div>
+
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyA7qxyctGRNlluN62IEUGsH5AnhZOyRUyk",
+            authDomain: "fir-demos-rich.firebaseapp.com",
+            databaseURL: "https://fir-demos-rich.firebaseio.com",
+            projectId: "fir-demos-rich",
+            storageBucket: "fir-demos-rich.appspot.com",
+            messagingSenderId: "938671312378"
+        };
+        firebase.initializeApp(config);
+
+        var database = firebase.database();
+        var counter = 0;
+
+        database.ref().on("value", function (snapshot) {
+            console.log("Value update", snapshot);
+            $("#debug").text(snapshot.val().count);
+        })
+
+        $("#button").on("click", function (event) {
+            console.log("Button Click", event);
+            counter++;
+            database.ref().set({ count: counter });
+        })
+    </script>
+</body>
+
+</html>
